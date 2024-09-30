@@ -412,13 +412,19 @@ function wyp_options_controller() {
 					// Purchase Code
 					$code = sanitize_key($_GET['purchase_code']);
 
-					// Adds Product code
-					if(!update_option("yp_purchase_code",$code)){
-						add_option("yp_purchase_code",$code);
-					}
+					if(strlen($code) === 36) {
 
-					// Redirect
-					wp_safe_redirect(admin_url( 'admin.php?page=yellow-pencil-license&wyp-activated=1' ));
+						// Adds Product code
+						if(!update_option("yp_purchase_code",$code)){
+							add_option("yp_purchase_code",$code);
+						}
+
+						// Redirect
+						wp_safe_redirect(admin_url( 'admin.php?page=yellow-pencil-license&wyp-activated=1' ));
+
+					}else{
+						wp_safe_redirect(admin_url( 'admin.php?page=yellow-pencil-license' ));
+					}
 					exit;
 
 				}elseif(defined('WTFV') == false){
@@ -1118,7 +1124,8 @@ function wyp_option_func() {
                 	$isActive = false;
 
                 	// Button Text
-                	if(isset($_GET['purchase_code']) || $purchase_code){
+                	if ((isset($_GET['purchase_code']) && is_string($_GET['purchase_code']) && strlen($_GET['purchase_code']) == 36) || 
+    (is_string($purchase_code) && strlen($purchase_code) == 36)) {
 
                 		// Disable license nonce
                 		$wyp_disable_license_nonce = wp_create_nonce('wyp_disable_license_nonce');
@@ -1135,7 +1142,7 @@ function wyp_option_func() {
 
                 		$isActive = true;
                 		$activate_btn = "Unlink License";
-                		$aclink = '<a class="wyp-disable-license" data-site="'.$siteURL["host"].'" data-code="'.$pcode.'" data-href="'.admin_url('admin.php?page=yellow-pencil-license&wyp-disable-license=true&_wpnonce='.$wyp_disable_license_nonce).'">';
+                		$aclink = '<a class="wyp-disable-license" data-site="'.esc_attr($siteURL["host"]).'" data-code="'.esc_attr($pcode).'" data-href="'.admin_url('admin.php?page=yellow-pencil-license&wyp-disable-license=true&_wpnonce='.$wyp_disable_license_nonce).'">';
 
                 	}else{
 
