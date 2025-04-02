@@ -412,7 +412,7 @@ function wyp_options_controller() {
 					// Purchase Code
 					$code = sanitize_key($_GET['purchase_code']);
 
-					if(strlen($code) === 36) {
+					if(strlen($code) === 36 || strlen($code) === 32) {
 
 						// Adds Product code
 						if(!update_option("yp_purchase_code",$code)){
@@ -1124,8 +1124,7 @@ function wyp_option_func() {
                 	$isActive = false;
 
                 	// Button Text
-                	if ((isset($_GET['purchase_code']) && is_string($_GET['purchase_code']) && strlen($_GET['purchase_code']) == 36) || 
-    (is_string($purchase_code) && strlen($purchase_code) == 36)) {
+                	if ((isset($_GET['purchase_code']) && is_string($_GET['purchase_code']) && (strlen($_GET['purchase_code']) == 36 || strlen($_GET['purchase_code']) == 32)) || (is_string($purchase_code) && (strlen($purchase_code) == 36 || strlen($purchase_code) == 32))) {
 
                 		// Disable license nonce
                 		$wyp_disable_license_nonce = wp_create_nonce('wyp_disable_license_nonce');
