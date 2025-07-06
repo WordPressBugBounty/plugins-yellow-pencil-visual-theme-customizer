@@ -5,6 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+$key = get_option("yp_purchase_code");
+if (!defined('YP_THEME_MODE') && !defined('YP_DEMO_MODE') && defined('WTFV') && ($key === null || $key === false)) {
+    wp_redirect(admin_url('admin.php?page=yellow-pencil-license'));
+    exit;
+}
+
 // Check if has href
 if(defined("YP_DEMO_MODE") == false){
 
@@ -393,7 +399,7 @@ $filter_css_editor = apply_filters( 'yp_css_editor', TRUE);
 		<div class="wyp-action-area">
 			<p class="wyp-info-unlock-p">Unlock all premium features now!</p>
 			<a class="wyp-info-modal-close">No, Thanks</a><a class="wyp-buy-link" target="_blank" href="https://waspthemes.com/yellow-pencil/buy">Upgrade Now</a>
-			<p class="wyp-info-last-note">30 Days Money-back Guarantee &mdash; Lifetime License &mdash; Premium Customer Support</p>
+			<p class="wyp-info-last-note">30 Days Money-back Guarantee &mdash; Premium Customer Support</p>
 		</div>
 		<a class='activate-pro' href="<?php echo admin_url('admin.php?page=yellow-pencil-license'); ?>" target="_blank">Already have a license?</a>
 	</div>

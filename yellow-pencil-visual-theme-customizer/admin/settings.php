@@ -122,9 +122,7 @@ function wyp_welcome_screen_content(){
 
 			<h3>Community</h3>
 			<ul>
-				<li><a href="https://www.facebook.com/groups/YellowPencils/" target="_blank">Facebook Community</a></li>
-				<li><a href="https://www.youtube.com/channel/UCKGdPyfmphEdBWPXR91GnYQ" target="_blank">youtube Channel</a></li>
-				<li><a href="https://waspthemes.ticksy.com/" target="_blank">Support Forum</a></li>
+				<li><a href="https://yellowpencil.waspthemes.com/contact/" target="_blank">Customer Support</a></li>
 			</ul>
 
 		</div>
@@ -306,13 +304,7 @@ function wyp_admin_footer () {
 
 	// if YellowPencil page
 	if($is_yellow_pencil_screen){
-
-		if(defined('WTFV')){
-			echo 'Enjoyed <strong>YellowPencil</strong>? Please leave us a <a target="_blank" href="https://codecanyon.net/downloads">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. We really appreciate your support!';
-		}else{
-			echo 'Enjoyed <strong>YellowPencil</strong>? Please leave us a <a target="_blank" href="https://wordpress.org/support/plugin/yellow-pencil-visual-theme-customizer/reviews/?filter=5#new-post">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. We really appreciate your support';
-		}
-
+		echo 'Enjoyed <strong>YellowPencil</strong>? Please leave us a <a target="_blank" href="https://wordpress.org/support/plugin/yellow-pencil-visual-theme-customizer/reviews/?filter=5#new-post">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. We really appreciate your support';
 	}
 
 }
