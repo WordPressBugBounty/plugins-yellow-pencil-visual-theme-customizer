@@ -1,7 +1,7 @@
 === Visual CSS Style Editor ===
 Tags: CSS, visual CSS, CSS editor, design, customize, font, animation, yellow pencil, theme
 Requires at least: 4.0
-Tested up to: 6.8
+Tested up to: 6.9
 Stable tag: 6.8
 Contributors: WaspThemes
 License: GPLv2 or later
