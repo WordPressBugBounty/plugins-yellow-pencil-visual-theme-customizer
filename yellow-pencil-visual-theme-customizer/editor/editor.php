@@ -97,7 +97,7 @@ $filter_css_editor = apply_filters( 'yp_css_editor', TRUE);
 	}
 
 ?>
-<body class="<?php echo trim($classesReturn); ?>">
+<body class="<?php echo esc_attr(trim($classesReturn)); ?>">
 
 	<div class="wyp-iframe-loader">
 		<div id="loader"><i></i></div>
@@ -109,9 +109,17 @@ $filter_css_editor = apply_filters( 'yp_css_editor', TRUE);
 		// Get Link
 		$frameLink = esc_url(wp_strip_all_tags(urldecode($_GET['href'])));
 
-		// Fix frameLink
+		// Fix frameLink: the raw value is never used as it is, it is rebuilt as an escaped URL.
 		if(empty($frameLink)){
 			$frameLink = trim( wp_strip_all_tags( urldecode( $_GET['href']) ) );
+			if(strstr($frameLink,'://') == true){
+				$frameLink = explode("://",$frameLink,2);
+				$frameLink = $frameLink[1];
+			}
+			$frameLink = esc_url( (is_ssl() ? 'https' : 'http').'://'.$frameLink );
+			if(empty($frameLink)){
+				$frameLink = esc_url( home_url('/') );
+			}
 		}
 
 		// Empty Variables
@@ -135,11 +143,22 @@ $filter_css_editor = apply_filters( 'yp_css_editor', TRUE);
 		$protocol = is_ssl() ? 'https' : 'http';
 		$frameNew = esc_url($frame,array($protocol));
 
-		if(empty($frameNew) == true && strstr($frame,'://') == true){
-			$frameNew = explode("://",$frame);
-			$frameNew = $protocol.'://'.$frameNew[1];
-		}elseif(empty($frameNew) == true && strstr($frame,'://') == false){
-			$frameNew = $protocol.'://'.$frame;
+		if(empty($frameNew) == true){
+
+			if(strstr($frame,'://') == true){
+				$frameNew = explode("://",$frame,2);
+				$frameNew = $protocol.'://'.$frameNew[1];
+			}else{
+				$frameNew = $protocol.'://'.$frame;
+			}
+
+			// The rebuilt link must be escaped too.
+			$frameNew = esc_url($frameNew,array($protocol));
+
+			if(empty($frameNew) == true){
+				$frameNew = esc_url( home_url('/') );
+			}
+
 		}
 
 		// Cleans the links
@@ -155,7 +174,7 @@ $filter_css_editor = apply_filters( 'yp_css_editor', TRUE);
 		}
 
 	?>
-	<iframe id="iframe" class="yellow_pencil_iframe" data-href="<?php echo $frameNew; ?>" tabindex="-1"></iframe>
+	<iframe id="iframe" class="yellow_pencil_iframe" data-href="<?php echo esc_attr($frameNew); ?>" tabindex="-1"></iframe>
 
 	<iframe data-page-href="<?php echo wyp_urlencode(esc_url($_GET['href'])); ?>" data-page-id="<?php echo esc_attr($_GET['wyp_page_id']); ?>" data-page-type="<?php echo esc_attr($_GET['wyp_page_type']); ?>" data-page-visitor="<?php echo isset($_GET['wyp_out']); ?>" id="wyp-customizing-type-frame" style="border-width: 0px;display:none;position:fixed;width:100%;height:100%;top:0;left:0;z-index:2147483645;" data-src="<?php echo esc_attr($customize_type_link); ?>" tabindex="-1"></iframe>
 

@@ -3,7 +3,7 @@
 Plugin Name: YellowPencil
 Plugin URI: https://yellowpencil.waspthemes.com
 Description: The most powerful visual CSS editor for WordPress. Customize any theme and page visually without coding.
-Version: 7.6.7
+Version: 7.6.8
 Author: WaspThemes
 Author URI: https://yellowpencil.waspthemes.com
 */
@@ -66,7 +66,7 @@ define('YP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('YP_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Define
-define('YP_VERSION', "7.6.7");
+define('YP_VERSION', "7.6.8");
 
 // Admin Settings Page
 include(YP_PLUGIN_DIR . 'admin/settings.php');
@@ -3060,7 +3060,7 @@ function wyp_frame_output() {
         // href
         $href = $_GET['href'];
         $type = $_GET['wyp_page_type'];
-        $wyp_mode = $_GET['wyp_mode'];
+        $wyp_mode = sanitize_key($_GET['wyp_mode']);
 
         // get shop id
         $shopID = wc_get_page_id('shop');
